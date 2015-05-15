@@ -1,8 +1,16 @@
 import os
 import glob
+import sys
+import argparse
 
-project_directory = '/Users/jochen/tmp/'  # root directory of your LaTeX files/documentation.
-file_patterns = ['*.aux', '*.bbl', '*.log']  # files to remove
+parser = argparse.ArgumentParser()
+parser.add_argument('--root', help='Root directory of your LaTeX files/documentation', type=str)
+args = parser.parse_args()
+
+if args.root and not os.path.isdir(args.root):
+    sys.exit("Error: directory not found")
+
+file_patterns = ['*.aux', '*.bbl', '*.blg', '*.lof', '*.log', '*.lol', '.*lot', '*.out', '*.toc']  # files to remove
 counter = 0  # counts removed files
 
 
@@ -14,10 +22,14 @@ def remove(filepath):
     except OSError:
         print "Failed to remove %s" % filepath
 
-
-for dirpath, dirnames, filenames in os.walk(project_directory):
+if not args.root:
     for pattern in file_patterns:
-        for filepath in glob.glob(os.path.join(dirpath, pattern)):
-            print filepath
+        for filepath in glob.glob(pattern):
+            remove(filepath)
+else:
+    for dirpath, dirnames, filenames in os.walk(args.root):
+        for pattern in file_patterns:
+            for filepath in glob.glob(os.path.join(dirpath, pattern)):
+                remove(filepath)
 
 print u'\U0001F37B' + " Cheers! %d file(s) removed." % counter
