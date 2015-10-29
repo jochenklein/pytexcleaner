@@ -10,7 +10,32 @@ args = parser.parse_args()
 if args.root and not os.path.isdir(args.root):
     sys.exit("Error: directory not found")
 
-file_patterns = ['*.aux', '*.bbl', '*.blg', '*.lof', '*.log', '*.lol', '.*lot', '*.out', '*.toc']  # files to remove
+file_patterns = [
+    '*.aux',
+    '*.bbl',
+    '*.blg',
+    '*.lof',
+    '*.log',
+    '*.lol',
+    '.*lot',
+    '*.out',
+    '*.toc',
+    '*.glo',
+    '*.idx',
+    '*.ist',
+    '*.acn',
+    '*.acr',
+    '*.alg',
+    '*.dvi',
+    '*.glg',
+    '*.gls',
+    '*.ilg',
+    '*.ind',
+    '*.maf',
+    '*.mtc',
+    '*.mtc1',
+    '*.synctex.gz']  # files to remove
+
 counter = 0  # counts removed files
 
 
