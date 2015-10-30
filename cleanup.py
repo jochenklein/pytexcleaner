@@ -4,11 +4,14 @@ import sys
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--root', help='Root directory of your LaTeX files/documentation', type=str)
+parser.add_argument(
+    '--root',
+    help='Root directory of your LaTeX project',
+    type=str)
 args = parser.parse_args()
 
 if args.root and not os.path.isdir(args.root):
-    sys.exit("Error: directory not found")
+    sys.exit("Error: directory '{0}' not found".format(args.root))
 
 file_patterns = [
     '*.aux',
@@ -34,7 +37,7 @@ file_patterns = [
     '*.maf',
     '*.mtc',
     '*.mtc1',
-    '*.synctex.gz']  # files to remove
+    '*.synctex.gz']  # file patterns to remove
 
 counter = 0  # counts removed files
 
@@ -45,7 +48,7 @@ def remove(filepath):
         os.remove(filepath)
         counter += 1
     except OSError:
-        print "Failed to remove %s" % filepath
+        print "Failed to remove file '{0}'".format(filepath)
 
 if not args.root:
     for pattern in file_patterns:
@@ -57,4 +60,4 @@ else:
             for filepath in glob.glob(os.path.join(dirpath, pattern)):
                 remove(filepath)
 
-print u'\U0001F37B' + " Cheers! %d file(s) removed." % counter
+print u'\U0001F37B' + " Cheers! {0} file(s) removed.".format(counter)
