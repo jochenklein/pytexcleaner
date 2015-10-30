@@ -17,7 +17,7 @@ file_patterns = [
     '*.lof',
     '*.log',
     '*.lol',
-    '.*lot',
+    '*.lot',
     '*.out',
     '*.toc',
     '*.glo',
